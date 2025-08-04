@@ -28,6 +28,8 @@ describe("RootLayout", () => {
 
   it("has correct metadata", () => {
     expect(metadata.title).toBe("Miovox");
-    expect(metadata.description).toBe("AI-powered voice solutions platform");
+    expect(metadata.description).toBe(
+      "Crafting tools, memories, and lifestyles."
+    );
   });
 });
