@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Miovox Studio - Brand Showcase</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;700&family=Playfair+Display:wght@700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        /* Light Mode Palette */
+        --color-text-primary: #271848;
+        --color-text-secondary: #5a526f;
+        --color-background: #f9fafb;
+        --color-surface: #ffffff;
+        --color-accent: #3f93cf;
+        --color-success: #22c55e;
+        --color-warning: #f97316;
+        --color-error: #ef4444;
+        --font-heading: "Playfair Display", serif;
+        --font-body: "Nunito Sans", sans-serif;
+        --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1),
+          0 2px 4px -2px rgb(0 0 0 / 0.1);
+      }
+
+      html.dark {
+        /* Dark Mode Palette */
+        --color-text-primary: #e1d9f2;
+        --color-text-secondary: #a79cb8;
+        --color-background: #111827;
+        --color-surface: #1f2937;
+        /* Accent color can often remain the same or be brightened slightly */
+        --color-accent: #3f93cf;
+      }
+
+      body {
+        font-family: var(--font-body);
+        background-color: var(--color-background);
+        color: var(--color-text-secondary);
+        transition: background-color 0.3s ease, color 0.3s ease;
+        margin: 0;
+        padding: 2rem;
+      }
+
+      .container {
+        max-width: 900px;
+        margin: auto;
+      }
+
+      header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid var(--color-surface);
+        padding-bottom: 1rem;
+        margin-bottom: 2rem;
+      }
+
+      .logo {
+        max-height: 40px;
+      }
+      .dark .logo-light {
+        display: none;
+      }
+      .logo-dark {
+        display: block;
+      }
+      .dark .logo-dark {
+        display: none;
+      }
+      .dark .logo-light {
+        display: block;
+      }
+
+      .theme-toggle {
+        background-color: var(--color-surface);
+        border: 1px solid var(--color-text-secondary);
+        color: var(--color-text-primary);
+        padding: 0.5rem 1rem;
+        border-radius: 999px;
+        cursor: pointer;
+        font-family: var(--font-body);
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 1.5rem;
+      }
+
+      .card {
+        background-color: var(--color-surface);
+        padding: 1.5rem;
+        border-radius: 12px;
+        box-shadow: var(--shadow);
+        transition: transform 0.2s ease-in-out;
+      }
+      .card:hover {
+        transform: translateY(-5px);
+      }
+
+      .card h3 {
+        font-family: var(--font-heading);
+        color: var(--color-text-primary);
+        margin-top: 0;
+        font-size: 1.5rem;
+      }
+
+      .button-accent {
+        display: inline-block;
+        background-color: var(--color-accent);
+        color: white;
+        padding: 0.75rem 1.5rem;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: bold;
+        transition: background-color 0.2s ease;
+      }
+      .button-accent:hover {
+        background-color: #357bb8;
+      }
+
+      .alert {
+        padding: 1rem;
+        margin-top: 0.5rem;
+        border-radius: 8px;
+        color: white;
+        font-weight: bold;
+        text-align: center;
+      }
+      .alert-success {
+        background-color: var(--color-success);
+      }
+      .alert-warning {
+        background-color: var(--color-warning);
+      }
+      .alert-error {
+        background-color: var(--color-error);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <div>
+          <img
+            src="REPLACE_WITH_LIGHT_MODE_LOGO_URL"
+            alt="Miovox Logo"
+            class="logo logo-light"
+          />
+          <img
+            src="REPLACE_WITH_DARK_MODE_LOGO_URL"
+            alt="Miovox Logo"
+            class="logo logo-dark"
+          />
+        </div>
+        <button class="theme-toggle" id="theme-toggle">Toggle Theme</button>
+      </header>
+
+      <div class="grid">
+        <div class="card">
+          <h3>Primary Text</h3>
+          <p>
+            Used for main headings. Font: Playfair Display. Color:
+            var(--color-text-primary).
+          </p>
+        </div>
+        <div class="card">
+          <h3>Secondary Text</h3>
+          <p>
+            Used for body copy and less important text. Font: Nunito Sans.
+            Color: var(--color-text-secondary).
+          </p>
+        </div>
+        <div class="card">
+          <h3>Accent Color</h3>
+          <p>Used for buttons, links, and key calls-to-action.</p>
+          <a href="#" class="button-accent" style="margin-top: 1rem"
+            >Example Button</a
+          >
+        </div>
+        <div class="card">
+          <h3>Status Indicators</h3>
+          <div class="alert alert-success">Success Message</div>
+          <div class="alert alert-warning">Warning Message</div>
+          <div class="alert alert-error">Error Message</div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const toggleButton = document.getElementById("theme-toggle");
+      const html = document.documentElement;
+
+      // Check for saved theme in localStorage or OS preference
+      if (
+        localStorage.getItem("theme") === "dark" ||
+        (!("theme" in localStorage) &&
+          window.matchMedia("(prefers-color-scheme: dark)").matches)
+      ) {
+        html.classList.add("dark");
+      }
+
+      toggleButton.addEventListener("click", () => {
+        html.classList.toggle("dark");
+        // Save preference to localStorage
+        if (html.classList.contains("dark")) {
+          localStorage.setItem("theme", "dark");
+        } else {
+          localStorage.setItem("theme", "light");
+        }
+      });
+    </script>
+  </body>
+</html>
