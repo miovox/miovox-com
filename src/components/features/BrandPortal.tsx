@@ -9,7 +9,7 @@ export default function BrandPortal(): JSX.Element {
       <div>
         <div className="space-y-0">
           {/* AI Product Development */}
-          <Link href="#" className="group block">
+          <Link href="/product" className="group block">
             <div className="bg-miovox-blue-50 hover:bg-miovox-blue-100 transition-all duration-500 ease-out py-12 md:py-16">
               <div className="max-w-7xl mx-auto px-8 md:px-12 flex flex-col md:flex-row items-center gap-8 md:gap-16">
                 <div className="w-20 h-20 md:w-24 md:h-24 bg-gray-800 rounded-2xl flex items-center justify-center group-hover:bg-gray-900 transition-all duration-300 group-hover:scale-110">

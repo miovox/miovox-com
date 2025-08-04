@@ -63,4 +63,23 @@ describe("Home Page", () => {
     expect(screen.getByText("About")).toBeInTheDocument();
     expect(screen.getByText("Contact")).toBeInTheDocument();
   });
+
+  it("AI Product Development card links to product page", () => {
+    render(<Home />);
+    const aiServiceLink = screen.getByRole("link", { name: /ai product development/i });
+    expect(aiServiceLink).toHaveAttribute("href", "/product");
+  });
+
+  it("AI Product Development card has proper link structure", () => {
+    render(<Home />);
+    const aiServiceLink = screen.getByRole("link", { name: /ai product development/i });
+    expect(aiServiceLink).toBeInTheDocument();
+    expect(aiServiceLink).toHaveClass("group", "block");
+  });
+
+  it("does not render header on homepage", () => {
+    render(<Home />);
+    // Header should not be present on homepage
+    expect(screen.queryByRole("banner")).not.toBeInTheDocument();
+  });
 });

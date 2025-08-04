@@ -4,7 +4,7 @@ import BrandPortal from "../components/features/BrandPortal";
 
 export default function Home(): JSX.Element {
   return (
-    <MainLayout>
+    <MainLayout showHeader={false}>
       <Hero />
       <BrandPortal />
     </MainLayout>
