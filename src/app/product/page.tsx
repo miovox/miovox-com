@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import MainLayout from "@/components/ui/MainLayout";
 import Container from "@/components/ui/Container";
+import PortfolioGallery from "@/components/features/PortfolioGallery";
 
 export const metadata: Metadata = {
   title: "AI Product Development | Miovox",
@@ -31,15 +32,12 @@ export default function ProductPage(): JSX.Element {
           </section>
             
           <aside className="max-w-4xl mx-auto mt-12">
-            <div className="p-8 bg-gray-50 rounded-lg text-center">
-              <h2 className="text-xl font-semibold text-gray-900 mb-4">
-                Coming Soon
+            <section>
+              <h2 className="text-2xl md:text-3xl font-bold text-gray-900 text-center mb-8">
+                Featured Product Projects
               </h2>
-              <p className="text-gray-600">
-                Detailed service information and portfolio examples will be
-                available here soon.
-              </p>
-            </div>
+              <PortfolioGallery category="Product" showFilters={false} />
+            </section>
           </aside>
         </article>
       </Container>
