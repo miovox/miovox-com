@@ -14,16 +14,16 @@ export default function HomePage(): JSX.Element {
       <Container>
         <article className="py-16 md:py-24">
           <header className="max-w-4xl mx-auto text-center space-y-6">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground">
               Home Tech Solutions
             </h1>
-            <p className="text-2xl md:text-3xl text-gray-600 font-medium" role="doc-subtitle">
+            <p className="text-2xl md:text-3xl text-muted-foreground font-medium" role="doc-subtitle">
               Crafting Lifestyles
             </p>
           </header>
           
           <section className="max-w-4xl mx-auto text-center mt-8">
-            <p className="text-lg md:text-xl text-gray-700 leading-relaxed max-w-3xl mx-auto">
+            <p className="text-lg md:text-xl text-foreground leading-relaxed max-w-3xl mx-auto">
               Transforming your home with expertly designed technology systems 
               that enhance daily life. Our innovative solutions focus on smart 
               home automation, energy efficiency, and lifestyle enhancement to 
@@ -33,8 +33,8 @@ export default function HomePage(): JSX.Element {
             
           <aside className="max-w-4xl mx-auto mt-12">
             <section>
-              <h2 className="text-2xl md:text-3xl font-bold text-gray-900 text-center mb-8">
-                Featured Home Tech Projects
+              <h2 className="text-2xl md:text-3xl font-bold text-foreground text-center mb-8">
+                Featured Homes
               </h2>
               <PortfolioGallery category="Home" showFilters={false} />
             </section>

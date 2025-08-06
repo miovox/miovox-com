@@ -28,7 +28,7 @@ describe("HomePage", () => {
   test("renders portfolio section with proper heading", () => {
     render(<HomePage />);
     
-    const portfolioHeading = screen.getByRole("heading", { name: /featured home tech projects/i, level: 2 });
+    const portfolioHeading = screen.getByRole("heading", { name: /featured homes/i, level: 2 });
     expect(portfolioHeading).toBeInTheDocument();
   });
 

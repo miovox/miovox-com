@@ -14,16 +14,16 @@ export default function EventsPage(): JSX.Element {
       <Container>
         <article className="py-16 md:py-24">
           <header className="max-w-4xl mx-auto text-center space-y-6">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground">
               Event Media Production
             </h1>
-            <p className="text-2xl md:text-3xl text-gray-600 font-medium" role="doc-subtitle">
+            <p className="text-2xl md:text-3xl text-muted-foreground font-medium" role="doc-subtitle">
               Crafting Memories
             </p>
           </header>
           
           <section className="max-w-4xl mx-auto text-center mt-8">
-            <p className="text-lg md:text-xl text-gray-700 leading-relaxed max-w-3xl mx-auto">
+            <p className="text-lg md:text-xl text-foreground leading-relaxed max-w-3xl mx-auto">
               Capturing moments with a keen approach to storytelling and
               memory preservation. Our expert team specializes in creating
               compelling event media that transforms special occasions into
@@ -32,8 +32,8 @@ export default function EventsPage(): JSX.Element {
           </section>
             
           <section className="max-w-4xl mx-auto mt-12">
-            <h2 className="text-2xl md:text-3xl font-bold text-gray-900 text-center mb-8">
-              Featured Event Projects
+            <h2 className="text-2xl md:text-3xl font-bold text-foreground text-center mb-8">
+              Featured Events
             </h2>
             <PortfolioGallery category="Event" showFilters={false} />
           </section>

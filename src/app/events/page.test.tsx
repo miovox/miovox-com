@@ -28,7 +28,7 @@ describe("EventsPage", () => {
   test("renders portfolio section with proper heading", () => {
     render(<EventsPage />);
     
-    const portfolioHeading = screen.getByRole("heading", { name: /featured event projects/i, level: 2 });
+    const portfolioHeading = screen.getByRole("heading", { name: /featured events/i, level: 2 });
     expect(portfolioHeading).toBeInTheDocument();
   });
 

@@ -28,7 +28,7 @@ describe("ProductPage", () => {
   test("renders portfolio section with proper heading", () => {
     render(<ProductPage />);
     
-    const portfolioHeading = screen.getByRole("heading", { name: /featured product projects/i, level: 2 });
+    const portfolioHeading = screen.getByRole("heading", { name: /featured products/i, level: 2 });
     expect(portfolioHeading).toBeInTheDocument();
   });
 
