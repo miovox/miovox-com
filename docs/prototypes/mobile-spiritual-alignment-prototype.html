@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brand Portal Modes - Mobile 2×2 Spiritual Alignment Prototype</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            /* Miovox Brand Colors */
+            --miovox-blue-50: #f0f9ff;
+            --miovox-blue-100: #e0f2fe;
+            --miovox-blue-200: #bae6fd;
+            --miovox-blue-300: #7dd3fc;
+            
+            /* Theme Variables */
+            --background: #09090b;
+            --foreground: #fafafa;
+            --muted-foreground: #a1a1aa;
+            --border: #27272a;
+            --accent: #18181b;
+            --primary: #fafafa;
+            --primary-foreground: #09090b;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--background);
+            color: var(--foreground);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header */
+        .header {
+            background: var(--background);
+            border-bottom: 1px solid var(--border);
+            padding: 1rem;
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
+
+        .header-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--foreground);
+            text-decoration: none;
+        }
+
+        .nav-group {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        /* Header Mode Switcher - Mobile 2×2 */
+        .header-mode-switcher {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-template-rows: repeat(2, 1fr);
+            gap: 2px;
+            background: var(--background);
+            border: 1.5px solid var(--border);
+            border-radius: 8px;
+            padding: 4px;
+            width: 100px;
+            height: 80px;
+        }
+
+        .header-mode-button {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: transparent;
+            border: none;
+            border-radius: 4px;
+            font-size: 0.625rem;
+            font-weight: 600;
+            color: var(--muted-foreground);
+            cursor: pointer;
+            transition: all 0.2s ease-out;
+            min-height: 44px;
+            text-decoration: none;
+        }
+
+        .header-mode-button:hover {
+            background: var(--accent);
+            color: var(--foreground);
+            transform: scale(1.02);
+        }
+
+        .header-mode-button.active {
+            background: var(--primary);
+            color: var(--primary-foreground);
+        }
+
+        .header-mode-icon {
+            width: 14px;
+            height: 14px;
+            margin-bottom: 2px;
+            font-size: 8px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .header-m-logo {
+            background: #4b5563;
+            color: white;
+            border-radius: 2px;
+        }
+
+        .header-philip-icon {
+            background: #6366f1;
+            color: white;
+            border-radius: 50%;
+            font-size: 6px;
+        }
+
+        /* Theme Toggle - Compact */
+        .theme-toggle {
+            display: flex;
+            background: var(--background);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 2px;
+        }
+
+        .theme-button {
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: transparent;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s ease-out;
+            font-size: 10px;
+        }
+
+        .theme-button:hover {
+            background: var(--accent);
+            transform: scale(1.02);
+        }
+
+        .theme-button.active {
+            background: var(--primary);
+        }
+
+        /* Main Content Area */
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .content-switcher {
+            padding: 1rem;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .view-toggle {
+            display: flex;
+            background: var(--accent);
+            border-radius: 8px;
+            padding: 4px;
+            margin: 0 auto;
+            max-width: 280px;
+        }
+
+        .view-button {
+            flex: 1;
+            padding: 0.5rem 1rem;
+            background: transparent;
+            border: none;
+            color: var(--muted-foreground);
+            cursor: pointer;
+            border-radius: 6px;
+            transition: all 0.2s ease-out;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .view-button.active {
+            background: var(--primary);
+            color: var(--primary-foreground);
+        }
+
+        /* Homepage View */
+        .homepage-view {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .hero-section {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #111827;
+            padding: 2rem 1rem;
+            text-align: center;
+        }
+
+        .hero-content h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .hero-content p {
+            color: var(--muted-foreground);
+            font-size: 1rem;
+        }
+
+        /* Homepage Mode Grid - Mobile 2×2 */
+        .homepage-mode-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-template-rows: repeat(2, 1fr);
+            height: 40vh;
+            gap: 0;
+        }
+
+        .homepage-mode-tile {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 1rem;
+            cursor: pointer;
+            text-decoration: none;
+            color: #1f2937;
+            transition: transform 0.3s ease-out, background-color 0.3s ease-out, box-shadow 0.3s ease-out;
+            position: relative;
+        }
+
+        .homepage-mode-tile:hover {
+            transform: scale(1.02);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            z-index: 10;
+        }
+
+        .homepage-mode-tile:active {
+            transform: scale(0.96);
+            transition-duration: 100ms;
+        }
+
+        .homepage-mode-tile.products {
+            background: var(--miovox-blue-50);
+        }
+
+        .homepage-mode-tile.products:hover {
+            background: var(--miovox-blue-100);
+        }
+
+        .homepage-mode-tile.events {
+            background: var(--miovox-blue-100);
+        }
+
+        .homepage-mode-tile.events:hover {
+            background: var(--miovox-blue-200);
+        }
+
+        .homepage-mode-tile.homes {
+            background: var(--miovox-blue-200);
+        }
+
+        .homepage-mode-tile.homes:hover {
+            background: var(--miovox-blue-300);
+        }
+
+        .homepage-mode-tile.about {
+            background: var(--miovox-blue-300);
+        }
+
+        .homepage-mode-tile.about:hover {
+            background: #38bdf8;
+        }
+
+        .homepage-mode-icon {
+            width: 20px;
+            height: 20px;
+            margin-bottom: 0.5rem;
+            transition: transform 0.3s ease-out;
+        }
+
+        .homepage-mode-tile:hover .homepage-mode-icon {
+            transform: scale(1.1);
+        }
+
+        .homepage-m-logo {
+            background: #374151;
+            color: white;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 10px;
+        }
+
+        .homepage-philip-icon {
+            background: #6366f1;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 8px;
+        }
+
+        .homepage-mode-label {
+            font-size: 1rem;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 0.25rem;
+        }
+
+        .homepage-mode-tagline {
+            font-size: 0.75rem;
+            opacity: 0.9;
+            line-height: 1.3;
+        }
+
+        /* Comparison View */
+        .comparison-view {
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .comparison-section {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+
+        .comparison-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #60a5fa;
+        }
+
+        .comparison-demo {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1rem;
+        }
+
+        .mini-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-template-rows: repeat(2, 1fr);
+            gap: 2px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 4px;
+            background: var(--background);
+        }
+
+        .mini-grid.header-demo {
+            width: 80px;
+            height: 64px;
+        }
+
+        .mini-grid.homepage-demo {
+            width: 120px;
+            height: 96px;
+        }
+
+        .mini-cell {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--accent);
+            border-radius: 3px;
+            font-size: 0.625rem;
+            font-weight: 600;
+            color: var(--muted-foreground);
+        }
+
+        .mini-cell.products { background: #f0f9ff; color: #1f2937; }
+        .mini-cell.events { background: #e0f2fe; color: #1f2937; }
+        .mini-cell.homes { background: #bae6fd; color: #1f2937; }
+        .mini-cell.about { background: #7dd3fc; color: #1f2937; }
+
+        .spiritual-points {
+            text-align: left;
+            font-size: 0.875rem;
+            line-height: 1.5;
+        }
+
+        .spiritual-points li {
+            margin: 0.5rem 0;
+            list-style: none;
+            position: relative;
+            padding-left: 1rem;
+        }
+
+        .spiritual-points li::before {
+            content: '✨';
+            position: absolute;
+            left: 0;
+        }
+
+        /* Touch Feedback */
+        @media (hover: none) and (pointer: coarse) {
+            .header-mode-button:active,
+            .homepage-mode-tile:active {
+                transform: scale(0.96);
+            }
+        }
+
+        /* Reduced Motion */
+        @media (prefers-reduced-motion: reduce) {
+            .header-mode-button,
+            .homepage-mode-tile,
+            .homepage-mode-icon {
+                transition: none !important;
+            }
+            
+            .homepage-mode-tile:hover {
+                transform: none;
+            }
+            
+            .homepage-mode-tile:hover .homepage-mode-icon {
+                transform: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-container">
+            <a href="#" class="logo">Miovox</a>
+            
+            <div class="nav-group">
+                <!-- Header Mode Switcher - 2×2 Grid -->
+                <div class="header-mode-switcher">
+                    <a href="#" class="header-mode-button active" data-mode="products">
+                        <div class="header-mode-icon header-m-logo">M</div>
+                        <span>Pro</span>
+                    </a>
+                    <a href="#" class="header-mode-button" data-mode="events">
+                        <div class="header-mode-icon header-m-logo">M</div>
+                        <span>Eve</span>
+                    </a>
+                    <a href="#" class="header-mode-button" data-mode="homes">
+                        <div class="header-mode-icon header-m-logo">M</div>
+                        <span>Hom</span>
+                    </a>
+                    <a href="#" class="header-mode-button" data-mode="about">
+                        <div class="header-mode-icon header-philip-icon">P</div>
+                        <span>Abo</span>
+                    </a>
+                </div>
+
+                <!-- Theme Toggle - Compact -->
+                <div class="theme-toggle">
+                    <button class="theme-button" data-theme="light">☀️</button>
+                    <button class="theme-button active" data-theme="dark">🌙</button>
+                    <button class="theme-button" data-theme="system">🖥️</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="content-switcher">
+            <div class="view-toggle">
+                <button class="view-button active" data-view="homepage">Homepage View</button>
+                <button class="view-button" data-view="comparison">Spiritual Alignment</button>
+            </div>
+        </div>
+
+        <!-- Homepage View -->
+        <div class="homepage-view" id="homepage-view">
+            <div class="hero-section">
+                <div class="hero-content">
+                    <h1>Miovox</h1>
+                    <p>Crafting tools, memories, and lifestyles.</p>
+                </div>
+            </div>
+
+            <!-- Homepage Mode Grid - 2×2 -->
+            <nav class="homepage-mode-grid">
+                <a href="#" class="homepage-mode-tile products">
+                    <div class="homepage-mode-icon homepage-m-logo">M</div>
+                    <h2 class="homepage-mode-label">Products</h2>
+                    <p class="homepage-mode-tagline">Crafting Tools</p>
+                </a>
+                <a href="#" class="homepage-mode-tile events">
+                    <div class="homepage-mode-icon homepage-m-logo">M</div>
+                    <h2 class="homepage-mode-label">Events</h2>
+                    <p class="homepage-mode-tagline">Crafting Memories</p>
+                </a>
+                <a href="#" class="homepage-mode-tile homes">
+                    <div class="homepage-mode-icon homepage-m-logo">M</div>
+                    <h2 class="homepage-mode-label">Homes</h2>
+                    <p class="homepage-mode-tagline">Crafting Lifestyles</p>
+                </a>
+                <a href="#" class="homepage-mode-tile about">
+                    <div class="homepage-mode-icon homepage-philip-icon">P</div>
+                    <h2 class="homepage-mode-label">About</h2>
+                    <p class="homepage-mode-tagline">It's This Guy</p>
+                </a>
+            </nav>
+        </div>
+
+        <!-- Spiritual Alignment Comparison -->
+        <div class="comparison-view" id="comparison-view" style="display: none;">
+            <div class="comparison-grid">
+                <div class="comparison-section">
+                    <h3 class="comparison-title">Header Navigation (2×2)</h3>
+                    <div class="comparison-demo">
+                        <div class="mini-grid header-demo">
+                            <div class="mini-cell products">MP</div>
+                            <div class="mini-cell events">ME</div>
+                            <div class="mini-cell homes">MH</div>
+                            <div class="mini-cell about">PA</div>
+                        </div>
+                    </div>
+                    <ul class="spiritual-points">
+                        <li>Compact 2×2 grid</li>
+                        <li>Icons + abbreviated text</li>
+                        <li>Touch-optimized targets</li>
+                        <li>Quick access navigation</li>
+                    </ul>
+                </div>
+
+                <div class="comparison-section">
+                    <h3 class="comparison-title">Homepage Grid (2×2)</h3>
+                    <div class="comparison-demo">
+                        <div class="mini-grid homepage-demo">
+                            <div class="mini-cell products">Products</div>
+                            <div class="mini-cell events">Events</div>
+                            <div class="mini-cell homes">Homes</div>
+                            <div class="mini-cell about">About</div>
+                        </div>
+                    </div>
+                    <ul class="spiritual-points">
+                        <li>Larger 2×2 grid</li>
+                        <li>Full labels + taglines</li>
+                        <li>Rich visual content</li>
+                        <li>Discovery navigation</li>
+                    </ul>
+                </div>
+
+                <div class="comparison-section">
+                    <h3 class="comparison-title">Spiritual Alignment ✨</h3>
+                    <ul class="spiritual-points">
+                        <li>Same grid pattern (2×2)</li>
+                        <li>Identical mode ordering</li>
+                        <li>Consistent visual hierarchy</li>
+                        <li>Matching interaction timing</li>
+                        <li>Unified touch experience</li>
+                        <li>Spatial memory alignment</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // View switching
+        document.querySelectorAll('.view-button').forEach(button => {
+            button.addEventListener('click', () => {
+                document.querySelectorAll('.view-button').forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+                
+                const view = button.dataset.view;
+                document.getElementById('homepage-view').style.display = view === 'homepage' ? 'flex' : 'none';
+                document.getElementById('comparison-view').style.display = view === 'comparison' ? 'block' : 'none';
+            });
+        });
+
+        // Header mode switching
+        document.querySelectorAll('.header-mode-button').forEach(button => {
+            button.addEventListener('click', (e) => {
+                e.preventDefault();
+                
+                document.querySelectorAll('.header-mode-button').forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+                
+                const mode = button.dataset.mode;
+                
+                // Also update homepage tile active state for demonstration
+                document.querySelectorAll('.homepage-mode-tile').forEach(tile => {
+                    tile.style.opacity = tile.classList.contains(mode) ? '1' : '0.7';
+                });
+                
+                // Announcement
+                const modeNames = { products: 'Products', events: 'Events', homes: 'Homes', about: 'About' };
+                console.log(`Header navigation: ${modeNames[mode]} selected`);
+            });
+        });
+
+        // Homepage tile interactions
+        document.querySelectorAll('.homepage-mode-tile').forEach(tile => {
+            tile.addEventListener('click', (e) => {
+                e.preventDefault();
+                
+                const mode = [...tile.classList].find(cls => ['products', 'events', 'homes', 'about'].includes(cls));
+                
+                // Update header to match
+                document.querySelectorAll('.header-mode-button').forEach(btn => btn.classList.remove('active'));
+                document.querySelector(`.header-mode-button[data-mode="${mode}"]`).classList.add('active');
+                
+                // Reset all tile opacities
+                document.querySelectorAll('.homepage-mode-tile').forEach(t => t.style.opacity = '1');
+                
+                const modeNames = { products: 'Products', events: 'Events', homes: 'Homes', about: 'About' };
+                console.log(`Homepage navigation: ${modeNames[mode]} selected`);
+            });
+
+            // Touch feedback
+            tile.addEventListener('touchstart', () => {
+                tile.style.transform = 'scale(0.96)';
+            });
+            
+            tile.addEventListener('touchend', () => {
+                setTimeout(() => {
+                    tile.style.transform = '';
+                }, 100);
+            });
+        });
+
+        // Theme switching
+        document.querySelectorAll('.theme-button').forEach(button => {
+            button.addEventListener('click', () => {
+                document.querySelectorAll('.theme-button').forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>

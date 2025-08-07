@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brand Portal Modes - Header "Big Brother" Hierarchy Prototype</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            /* Theme Variables */
+            --background: #09090b;
+            --foreground: #fafafa;
+            --muted-foreground: #a1a1aa;
+            --border: #27272a;
+            --accent: #18181b;
+            --primary: #fafafa;
+            --primary-foreground: #09090b;
+            --ring: #3b82f6;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--background);
+            color: var(--foreground);
+            min-height: 100vh;
+        }
+
+        /* Header Container */
+        .header {
+            background: var(--background);
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            padding: 1rem 0;
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        /* Logo */
+        .logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: var(--foreground);
+        }
+
+        .logo-image {
+            width: 180px;
+            height: auto;
+        }
+
+        /* Navigation Group (Right Side) */
+        .nav-group {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        /* MODE SWITCHER (Big Brother) */
+        .mode-switcher {
+            display: flex;
+            align-items: center;
+            background: var(--background);
+            border: 1.5px solid var(--border);
+            border-radius: 0.5rem;
+            padding: 0.375rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            transition: all 0.25s ease-out;
+        }
+
+        .mode-switcher:hover {
+            border-color: var(--accent);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+        }
+
+        .mode-button {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+            text-decoration: none;
+            color: var(--muted-foreground);
+            min-width: 4rem;
+            transition: all 0.2s ease-out;
+            position: relative;
+            white-space: nowrap;
+        }
+
+        .mode-button:hover {
+            color: var(--foreground);
+            background: var(--accent);
+            transform: scale(1.02);
+        }
+
+        .mode-button:active {
+            transform: scale(0.98);
+        }
+
+        .mode-button.active {
+            background: var(--primary);
+            color: var(--primary-foreground);
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+            transform: scale(1.0);
+        }
+
+        .mode-button:focus-visible {
+            outline: 2px solid var(--ring);
+            outline-offset: 2px;
+        }
+
+        /* Mode Button Icons */
+        .mode-icon {
+            width: 16px;
+            height: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            font-weight: 700;
+        }
+
+        .m-logo-icon {
+            background: #4b5563;
+            color: white;
+            border-radius: 3px;
+        }
+
+        .philip-icon {
+            background: #6366f1;
+            color: white;
+            border-radius: 50%;
+            font-size: 8px;
+        }
+
+        /* THEME TOGGLE (Secondary) */
+        .theme-toggle {
+            display: flex;
+            align-items: center;
+            background: var(--background);
+            border: 1px solid var(--border);
+            border-radius: 0.5rem;
+            padding: 0.25rem;
+        }
+
+        .theme-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.375rem;
+            padding: 0.375rem 0.75rem;
+            border-radius: 0.375rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--muted-foreground);
+            text-decoration: none;
+            min-width: 52px;
+            transition: all 0.2s ease-out;
+        }
+
+        .theme-button:hover {
+            color: var(--foreground);
+            background: var(--accent);
+            transform: scale(1.02);
+        }
+
+        .theme-button.active {
+            background: var(--primary);
+            color: var(--primary-foreground);
+        }
+
+        .theme-icon {
+            width: 16px;
+            height: 16px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .header-container {
+                padding: 0 1.5rem;
+            }
+            
+            .nav-group {
+                gap: 0.75rem;
+            }
+
+            .mode-button {
+                padding: 0.375rem 0.75rem;
+                min-width: 3.5rem;
+            }
+
+            .mode-button-text {
+                display: none;
+            }
+
+            .mode-button-text.sm-show {
+                display: inline;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .header-container {
+                padding: 0 1rem;
+            }
+
+            .logo-image {
+                width: 140px;
+            }
+
+            .nav-group {
+                gap: 0.5rem;
+            }
+
+            /* Mobile 2×2 Mode Switcher */
+            .mode-switcher {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                grid-template-rows: repeat(2, 1fr);
+                gap: 2px;
+                padding: 0.25rem;
+                width: 120px;
+            }
+
+            .mode-button {
+                padding: 0.5rem 0.25rem;
+                min-width: auto;
+                font-size: 0.75rem;
+                text-align: center;
+                justify-content: center;
+            }
+
+            .mode-button-text {
+                display: none;
+            }
+
+            /* Theme toggle compact */
+            .theme-toggle {
+                padding: 0.125rem;
+            }
+
+            .theme-button {
+                padding: 0.5rem;
+                min-width: auto;
+            }
+
+            .theme-button-text {
+                display: none;
+            }
+        }
+
+        /* Demo Page Content */
+        .page-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+
+        .page-title {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .page-subtitle {
+            font-size: 1.5rem;
+            color: var(--muted-foreground);
+            margin-bottom: 2rem;
+        }
+
+        .demo-controls {
+            background: rgba(0, 0, 0, 0.6);
+            padding: 2rem;
+            border-radius: 12px;
+            margin: 2rem 0;
+            backdrop-filter: blur(10px);
+        }
+
+        .demo-controls h3 {
+            margin-bottom: 1rem;
+            color: #fbbf24;
+        }
+
+        .demo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .demo-section {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1.5rem;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+        }
+
+        .demo-section h4 {
+            margin-bottom: 1rem;
+            color: #60a5fa;
+        }
+
+        .demo-section ul {
+            text-align: left;
+            list-style: none;
+        }
+
+        .demo-section li {
+            margin: 0.5rem 0;
+            padding-left: 1rem;
+            position: relative;
+        }
+
+        .demo-section li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--muted-foreground);
+        }
+
+        /* Reduced Motion */
+        @media (prefers-reduced-motion: reduce) {
+            .mode-button,
+            .theme-button,
+            .mode-switcher {
+                transition: none !important;
+            }
+            
+            .mode-button:hover,
+            .theme-button:hover {
+                transform: none !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-container">
+            <!-- Logo -->
+            <a href="#" class="logo">
+                <svg class="logo-image" viewBox="0 0 180 45" fill="currentColor">
+                    <text x="90" y="32" text-anchor="middle" font-family="Arial, sans-serif" font-size="24" font-weight="bold">
+                        Miovox
+                    </text>
+                </svg>
+            </a>
+
+            <!-- Navigation Group -->
+            <div class="nav-group">
+                <!-- MODE SWITCHER (Big Brother) -->
+                <div class="mode-switcher" role="group" aria-label="Navigate between site sections">
+                    <a href="#" class="mode-button active" data-mode="product" role="radio" aria-checked="true">
+                        <div class="mode-icon m-logo-icon">M</div>
+                        <span class="mode-button-text">Products</span>
+                    </a>
+                    <a href="#" class="mode-button" data-mode="events" role="radio" aria-checked="false">
+                        <div class="mode-icon m-logo-icon">M</div>
+                        <span class="mode-button-text">Events</span>
+                    </a>
+                    <a href="#" class="mode-button" data-mode="home" role="radio" aria-checked="false">
+                        <div class="mode-icon m-logo-icon">M</div>
+                        <span class="mode-button-text">Homes</span>
+                    </a>
+                    <a href="#" class="mode-button" data-mode="about" role="radio" aria-checked="false">
+                        <div class="mode-icon philip-icon">P</div>
+                        <span class="mode-button-text">About</span>
+                    </a>
+                </div>
+
+                <!-- THEME TOGGLE (Secondary) -->
+                <div class="theme-toggle" role="group" aria-label="Theme selection">
+                    <button class="theme-button" data-theme="light">
+                        <span class="theme-icon">☀️</span>
+                        <span class="theme-button-text">Light</span>
+                    </button>
+                    <button class="theme-button active" data-theme="dark">
+                        <span class="theme-icon">🌙</span>
+                        <span class="theme-button-text">Dark</span>
+                    </button>
+                    <button class="theme-button" data-theme="system">
+                        <span class="theme-icon">🖥️</span>
+                        <span class="theme-button-text">System</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="page-content">
+        <h1 class="page-title">Header "Big Brother" Hierarchy</h1>
+        <p class="page-subtitle">Interactive prototype demonstrating mode switcher prominence</p>
+
+        <div class="demo-controls">
+            <h3>🎨 UX Demonstration Features</h3>
+            
+            <div class="demo-grid">
+                <div class="demo-section">
+                    <h4>Visual Hierarchy</h4>
+                    <ul>
+                        <li>Mode Switcher: 1.5px border, shadow, 600 font-weight</li>
+                        <li>Theme Toggle: 1px border, 500 font-weight (secondary)</li>
+                        <li>Clear Logo → Mode → Theme progression</li>
+                        <li>Hover states enhance the hierarchy</li>
+                    </ul>
+                </div>
+                
+                <div class="demo-section">
+                    <h4>Interaction States</h4>
+                    <ul>
+                        <li>Hover: Scale 1.02 with background change</li>
+                        <li>Active: Primary background, no scale (prevents double-scaling)</li>
+                        <li>Focus: Ring outline for keyboard navigation</li>
+                        <li>Smooth 200ms transitions throughout</li>
+                    </ul>
+                </div>
+                
+                <div class="demo-section">
+                    <h4>Responsive Behavior</h4>
+                    <ul>
+                        <li>Desktop: Full icon + text labels</li>
+                        <li>Tablet: Compact text, maintained prominence</li>
+                        <li>Mobile: 2×2 grid (spiritual alignment with homepage)</li>
+                        <li>Touch-friendly 44px+ targets</li>
+                    </ul>
+                </div>
+                
+                <div class="demo-section">
+                    <h4>Accessibility Features</h4>
+                    <ul>
+                        <li>ARIA role="radio" for mode selection</li>
+                        <li>Clear focus indicators</li>
+                        <li>Keyboard navigation support</li>
+                        <li>Reduced motion respect</li>
+                    </ul>
+                </div>
+            </div>
+
+            <p style="margin-top: 2rem; opacity: 0.8;">
+                <strong>Try:</strong> Click mode buttons, hover for states, resize window for responsive behavior, use keyboard navigation (Tab + Enter)
+            </p>
+        </div>
+    </main>
+
+    <script>
+        // Mode switching functionality
+        document.querySelectorAll('.mode-button').forEach(button => {
+            button.addEventListener('click', (e) => {
+                e.preventDefault();
+                
+                // Update active states
+                document.querySelectorAll('.mode-button').forEach(btn => {
+                    btn.classList.remove('active');
+                    btn.setAttribute('aria-checked', 'false');
+                });
+                
+                button.classList.add('active');
+                button.setAttribute('aria-checked', 'true');
+                
+                const mode = button.dataset.mode;
+                const modeNames = {
+                    product: 'Products',
+                    events: 'Events', 
+                    home: 'Homes',
+                    about: 'About'
+                };
+                
+                // Update page content
+                document.querySelector('.page-title').textContent = `${modeNames[mode]} Section`;
+                document.querySelector('.page-subtitle').textContent = `Currently viewing ${modeNames[mode]} - Mode switcher shows active state`;
+                
+                // Announce to screen readers
+                const announcement = `Navigated to ${modeNames[mode]} section`;
+                const announcer = document.createElement('div');
+                announcer.setAttribute('aria-live', 'polite');
+                announcer.setAttribute('aria-atomic', 'true');
+                announcer.style.position = 'absolute';
+                announcer.style.left = '-10000px';
+                announcer.textContent = announcement;
+                document.body.appendChild(announcer);
+                setTimeout(() => document.body.removeChild(announcer), 1000);
+            });
+
+            // Keyboard support
+            button.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    button.click();
+                }
+                
+                // Arrow key navigation
+                if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
+                    e.preventDefault();
+                    const buttons = [...document.querySelectorAll('.mode-button')];
+                    const currentIndex = buttons.indexOf(button);
+                    let nextIndex;
+                    
+                    if (e.key === 'ArrowLeft') {
+                        nextIndex = currentIndex > 0 ? currentIndex - 1 : buttons.length - 1;
+                    } else {
+                        nextIndex = currentIndex < buttons.length - 1 ? currentIndex + 1 : 0;
+                    }
+                    
+                    buttons[nextIndex].focus();
+                }
+            });
+        });
+
+        // Theme switching (demo only)
+        document.querySelectorAll('.theme-button').forEach(button => {
+            button.addEventListener('click', () => {
+                document.querySelectorAll('.theme-button').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                button.classList.add('active');
+            });
+        });
+
+        // Responsive demo updates
+        function updateResponsiveInfo() {
+            const width = window.innerWidth;
+            const demoTitle = document.querySelector('.page-subtitle');
+            if (width <= 640) {
+                demoTitle.textContent = '📱 Mobile: 2×2 mode grid (spiritual alignment with homepage)';
+            } else if (width <= 1024) {
+                demoTitle.textContent = '📟 Tablet: Compact labels with maintained hierarchy';
+            } else {
+                demoTitle.textContent = '🖥️ Desktop: Full mode switcher as "big brother" to theme toggle';
+            }
+        }
+
+        window.addEventListener('resize', updateResponsiveInfo);
+        updateResponsiveInfo();
+    </script>
+</body>
+</html>

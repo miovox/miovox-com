@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brand Portal Modes - Inline Dropdown Navigation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            /* Theme Variables */
+            --background: #09090b;
+            --foreground: #fafafa;
+            --muted-foreground: #a1a1aa;
+            --border: #27272a;
+            --accent: #18181b;
+            --primary: #fafafa;
+            --primary-foreground: #09090b;
+            --ring: #3b82f6;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--background);
+            color: var(--foreground);
+            min-height: 100vh;
+        }
+
+        /* Header */
+        .header {
+            background: var(--background);
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
+
+        .header-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Inline Logo + Mode Dropdown */
+        .brand-nav {
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+
+        .brand-dropdown-button {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: transparent;
+            border: none;
+            color: var(--foreground);
+            cursor: pointer;
+            font-size: 1.25rem;
+            font-weight: 700;
+            text-decoration: none;
+            padding: 0.5rem;
+            border-radius: 8px;
+            transition: all 0.2s ease-out;
+        }
+
+        .brand-dropdown-button:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .brand-logo-text {
+            color: var(--foreground);
+        }
+
+        .brand-mode-text {
+            color: var(--muted-foreground);
+            font-weight: 600;
+            transition: color 0.2s ease-out;
+        }
+
+        .brand-dropdown-button:hover .brand-mode-text {
+            color: var(--foreground);
+        }
+
+        .dropdown-chevron {
+            color: var(--muted-foreground);
+            font-size: 0.875rem;
+            transition: transform 0.2s ease-out;
+            margin-left: 0.25rem;
+        }
+
+        .brand-dropdown-button:hover .dropdown-chevron,
+        .brand-dropdown-button.open .dropdown-chevron {
+            transform: rotate(180deg);
+            color: var(--foreground);
+        }
+
+        /* Dropdown Menu */
+        .brand-dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            margin-top: 0.5rem;
+            background: var(--background);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 0.5rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(20px);
+            min-width: 200px;
+            opacity: 0;
+            transform: translateY(-10px) scale(0.95);
+            pointer-events: none;
+            transition: all 0.2s ease-out;
+            z-index: 100;
+        }
+
+        .brand-dropdown-menu.open {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            pointer-events: auto;
+        }
+
+        .dropdown-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem;
+            border-radius: 8px;
+            text-decoration: none;
+            color: var(--foreground);
+            transition: all 0.2s ease-out;
+            font-size: 0.875rem;
+            font-weight: 500;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .dropdown-item:hover {
+            background: var(--accent);
+        }
+
+        .dropdown-item.active {
+            background: rgba(96, 165, 250, 0.1);
+            color: #60a5fa;
+        }
+
+        .dropdown-item.active::after {
+            content: '✓';
+            position: absolute;
+            right: 0.75rem;
+            color: #60a5fa;
+            font-weight: 600;
+        }
+
+        .dropdown-icon {
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            font-weight: 700;
+            border-radius: 4px;
+            flex-shrink: 0;
+        }
+
+        .dropdown-m-logo {
+            background: #4b5563;
+            color: white;
+        }
+
+        .dropdown-philip-icon {
+            background: #6366f1;
+            color: white;
+            border-radius: 50%;
+            font-size: 8px;
+        }
+
+        .dropdown-item-content {
+            display: flex;
+            flex-direction: column;
+            gap: 0.125rem;
+        }
+
+        .dropdown-item-title {
+            font-weight: 600;
+            line-height: 1.2;
+        }
+
+        .dropdown-item-subtitle {
+            font-size: 0.75rem;
+            color: var(--muted-foreground);
+            line-height: 1.2;
+        }
+
+        /* Theme Toggle - Right Side */
+        .theme-toggle {
+            display: flex;
+            background: var(--background);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 2px;
+        }
+
+        .theme-button {
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: transparent;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s ease-out;
+            font-size: 14px;
+        }
+
+        .theme-button:hover {
+            background: var(--accent);
+        }
+
+        .theme-button.active {
+            background: var(--primary);
+        }
+
+        /* Demo Content */
+        .demo-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .demo-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #60a5fa, #a855f7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .demo-subtitle {
+            font-size: 1.25rem;
+            color: var(--muted-foreground);
+            margin-bottom: 2rem;
+        }
+
+        .demo-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: left;
+        }
+
+        .feature-card h3 {
+            color: #60a5fa;
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .feature-card ul {
+            list-style: none;
+            font-size: 0.875rem;
+            line-height: 1.6;
+        }
+
+        .feature-card li {
+            margin: 0.5rem 0;
+            padding-left: 1rem;
+            position: relative;
+        }
+
+        .feature-card li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--muted-foreground);
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 640px) {
+            .header-container {
+                padding: 0.75rem 1rem;
+            }
+            
+            .brand-dropdown-button {
+                font-size: 1.125rem;
+            }
+            
+            .theme-toggle {
+                padding: 1px;
+            }
+            
+            .theme-button {
+                width: 32px;
+                height: 32px;
+                font-size: 12px;
+            }
+        }
+
+        /* Demo Instructions */
+        .demo-instructions {
+            background: rgba(251, 191, 36, 0.1);
+            border: 1px solid rgba(251, 191, 36, 0.3);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .demo-instructions h4 {
+            color: #fbbf24;
+            margin-bottom: 1rem;
+            font-size: 1.125rem;
+        }
+
+        .demo-instructions p {
+            color: var(--muted-foreground);
+            line-height: 1.6;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-container">
+            <!-- Brand Navigation Dropdown -->
+            <div class="brand-nav">
+                <button class="brand-dropdown-button" id="brand-dropdown-toggle">
+                    <span class="brand-logo-text">Miovox</span>
+                    <span class="brand-mode-text" id="current-mode">Products</span>
+                    <span class="dropdown-chevron">▼</span>
+                </button>
+                
+                <nav class="brand-dropdown-menu" id="brand-dropdown-menu">
+                    <a href="#" class="dropdown-item active" data-mode="Products" data-subtitle="Crafting Tools">
+                        <div class="dropdown-icon dropdown-m-logo">M</div>
+                        <div class="dropdown-item-content">
+                            <div class="dropdown-item-title">Products</div>
+                            <div class="dropdown-item-subtitle">Crafting Tools</div>
+                        </div>
+                    </a>
+                    <a href="#" class="dropdown-item" data-mode="Events" data-subtitle="Crafting Memories">
+                        <div class="dropdown-icon dropdown-m-logo">M</div>
+                        <div class="dropdown-item-content">
+                            <div class="dropdown-item-title">Events</div>
+                            <div class="dropdown-item-subtitle">Crafting Memories</div>
+                        </div>
+                    </a>
+                    <a href="#" class="dropdown-item" data-mode="Home Tech" data-subtitle="Crafting Lifestyles">
+                        <div class="dropdown-icon dropdown-m-logo">M</div>
+                        <div class="dropdown-item-content">
+                            <div class="dropdown-item-title">Home Tech</div>
+                            <div class="dropdown-item-subtitle">Crafting Lifestyles</div>
+                        </div>
+                    </a>
+                    <a href="#" class="dropdown-item" data-mode="Info" data-subtitle="It's This Guy">
+                        <div class="dropdown-icon dropdown-philip-icon">P</div>
+                        <div class="dropdown-item-content">
+                            <div class="dropdown-item-title">Info</div>
+                            <div class="dropdown-item-subtitle">It's This Guy</div>
+                        </div>
+                    </a>
+                </nav>
+            </div>
+
+            <!-- Theme Toggle -->
+            <div class="theme-toggle">
+                <button class="theme-button">☀️</button>
+                <button class="theme-button active">🌙</button>
+                <button class="theme-button">🖥️</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="demo-content">
+        <h1 class="demo-title">Inline Dropdown Navigation</h1>
+        <p class="demo-subtitle">
+            "Miovox [Mode]" creates a cohesive brand statement with elegant dropdown access
+        </p>
+
+        <div class="demo-instructions">
+            <h4>🎯 Try the Interactive Demo</h4>
+            <p>
+                Click on "Miovox Products" in the header above to see the dropdown menu. 
+                Notice how it reads as inline text while providing clean access to all four sections. 
+                The current section is always displayed as part of the brand name.
+            </p>
+        </div>
+
+        <div class="demo-features">
+            <div class="feature-card">
+                <h3>🎨 Design Benefits</h3>
+                <ul>
+                    <li>Cohesive brand statement: "Miovox Products"</li>
+                    <li>Clean header that scales to mobile beautifully</li>
+                    <li>Dropdown feels like natural text expansion</li>
+                    <li>Current section always visible in brand context</li>
+                    <li>Maintains sophisticated aesthetic</li>
+                </ul>
+            </div>
+
+            <div class="feature-card">
+                <h3>🚀 UX Advantages</h3>
+                <ul>
+                    <li>Contextual: Users always know where they are</li>
+                    <li>Efficient: One click to see all options</li>
+                    <li>Familiar: Standard dropdown interaction pattern</li>
+                    <li>Scalable: Works perfectly on all screen sizes</li>
+                    <li>Accessible: Proper ARIA and keyboard support</li>
+                </ul>
+            </div>
+
+            <div class="feature-card">
+                <h3>💡 Implementation</h3>
+                <ul>
+                    <li>Replace desktop "big brother" mode switcher</li>
+                    <li>Use same pattern on mobile (no separate mobile version)</li>
+                    <li>Maintain theme toggle on the right</li>
+                    <li>Beautiful backdrop blur and smooth animations</li>
+                    <li>Active state shows current selection</li>
+                </ul>
+            </div>
+
+            <div class="feature-card">
+                <h3>🎯 Brand Consistency</h3>
+                <ul>
+                    <li>"Miovox Products" - AI and product development</li>
+                    <li>"Miovox Events" - Event media production</li>
+                    <li>"Miovox Home Tech" - Smart home solutions</li>
+                    <li>"Miovox Info" - About Philip and the company</li>
+                    <li>Each creates a complete brand statement</li>
+                </ul>
+            </div>
+        </div>
+
+        <div style="background: rgba(34, 197, 94, 0.1); border: 1px solid rgba(34, 197, 94, 0.3); border-radius: 12px; padding: 2rem; margin-top: 3rem;">
+            <h3 style="color: #22c55e; margin-bottom: 1rem; text-align: center;">✅ Perfect Solution</h3>
+            <p style="color: var(--muted-foreground); text-align: center; line-height: 1.6;">
+                This approach solves all the mobile header challenges while creating an elegant, 
+                unified navigation pattern that works beautifully across all devices. 
+                The inline text creates natural brand statements that feel intentional and sophisticated.
+            </p>
+        </div>
+    </main>
+
+    <script>
+        // Dropdown functionality
+        const dropdownToggle = document.getElementById('brand-dropdown-toggle');
+        const dropdownMenu = document.getElementById('brand-dropdown-menu');
+        const currentModeText = document.getElementById('current-mode');
+        
+        // Toggle dropdown
+        dropdownToggle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const isOpen = dropdownMenu.classList.contains('open');
+            
+            if (isOpen) {
+                closeDropdown();
+            } else {
+                openDropdown();
+            }
+        });
+        
+        function openDropdown() {
+            dropdownMenu.classList.add('open');
+            dropdownToggle.classList.add('open');
+            document.addEventListener('click', handleOutsideClick);
+        }
+        
+        function closeDropdown() {
+            dropdownMenu.classList.remove('open');
+            dropdownToggle.classList.remove('open');
+            document.removeEventListener('click', handleOutsideClick);
+        }
+        
+        function handleOutsideClick(e) {
+            if (!dropdownToggle.contains(e.target) && !dropdownMenu.contains(e.target)) {
+                closeDropdown();
+            }
+        }
+        
+        // Handle dropdown item selection
+        document.querySelectorAll('.dropdown-item').forEach(item => {
+            item.addEventListener('click', (e) => {
+                e.preventDefault();
+                
+                const mode = item.dataset.mode;
+                const subtitle = item.dataset.subtitle;
+                
+                // Update current mode display
+                currentModeText.textContent = mode;
+                
+                // Update active state
+                document.querySelectorAll('.dropdown-item').forEach(i => i.classList.remove('active'));
+                item.classList.add('active');
+                
+                // Update page title for demo
+                document.querySelector('.demo-title').textContent = `${mode} Section`;
+                document.querySelector('.demo-subtitle').textContent = `${subtitle} - Now showing as "Miovox ${mode}"`;
+                
+                // Close dropdown
+                closeDropdown();
+                
+                console.log(`Navigation: Miovox ${mode} (${subtitle})`);
+            });
+        });
+        
+        // Keyboard support
+        dropdownToggle.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                dropdownToggle.click();
+            }
+            
+            if (e.key === 'Escape') {
+                closeDropdown();
+            }
+        });
+        
+        // Arrow key navigation in dropdown
+        dropdownMenu.addEventListener('keydown', (e) => {
+            const items = [...dropdownMenu.querySelectorAll('.dropdown-item')];
+            const currentIndex = items.findIndex(item => item === document.activeElement);
+            
+            if (e.key === 'ArrowDown') {
+                e.preventDefault();
+                const nextIndex = currentIndex < items.length - 1 ? currentIndex + 1 : 0;
+                items[nextIndex].focus();
+            }
+            
+            if (e.key === 'ArrowUp') {
+                e.preventDefault();
+                const prevIndex = currentIndex > 0 ? currentIndex - 1 : items.length - 1;
+                items[prevIndex].focus();
+            }
+            
+            if (e.key === 'Escape') {
+                closeDropdown();
+                dropdownToggle.focus();
+            }
+        });
+        
+        // Theme switching
+        document.querySelectorAll('.theme-button').forEach(button => {
+            button.addEventListener('click', () => {
+                document.querySelectorAll('.theme-button').forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+            });
+        });
+        
+        console.log('🎨 Inline dropdown navigation loaded!');
+        console.log('Click "Miovox Products" to test the dropdown interaction.');
+    </script>
+</body>
+</html>

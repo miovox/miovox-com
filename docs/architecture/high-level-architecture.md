@@ -26,5 +26,13 @@ The high-level diagram shows a user's browser accessing the static Next.js site 
 - **Jamstack Architecture:** The frontend is pre-built into highly optimized static assets and served from a CDN. Dynamic functionality is handled by client-side JavaScript. **Rationale:** This provides optimal performance, higher security, and lower cost of scaling.
 - **Static Site Generation (SSG):** Pages are generated at build time, not on a server for each request. **Rationale:** Ensures the fastest possible page loads for visitors.
 - **Component-Based UI:** The user interface will be built as a series of reusable components in React. **Rationale:** Promotes maintainability, reusability, and a clean codebase.
+- **Variant-Based Component Design:** Navigation components use variant patterns (`ServiceNavigation`) for consistent behavior across different contexts (homepage vs header). **Rationale:** Reduces code duplication while maintaining design system consistency.
+
+## Navigation Architecture
+
+- **Unified Service System:** Single `ServiceNavigation` component provides consistent navigation across homepage (1×4 grid) and header (subtle inline dropdown) contexts.
+- **Brand Statement Pattern:** Header navigation presents as natural brand text ("Miovox [Service] ▼") rather than obvious UI chrome for sophisticated user experience.
+- **Theme-Aware Assets:** Icon components automatically switch between light/dark variants based on user's theme preference using `next-themes` integration.
+- **Progressive Enhancement:** Navigation works with JavaScript disabled, graceful fallbacks for all interactive states.
 
 ---
