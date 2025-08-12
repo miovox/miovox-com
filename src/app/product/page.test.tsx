@@ -1,39 +1,48 @@
 import { render, screen } from "@testing-library/react";
 import { expect, test, describe } from "vitest";
+import { ThemeProvider } from "@/components/providers/ThemeProvider";
 import ProductPage from "./page";
+
+const renderWithProviders = (ui: React.ReactElement) => {
+  return render(
+    <ThemeProvider>
+      {ui}
+    </ThemeProvider>
+  );
+};
 
 describe("ProductPage", () => {
   test("renders page title correctly", () => {
-    render(<ProductPage />);
+    renderWithProviders(<ProductPage />);
     
     const title = screen.getByRole("heading", { name: /ai product development/i, level: 1 });
     expect(title).toBeInTheDocument();
   });
 
   test("renders subtitle correctly", () => {
-    render(<ProductPage />);
+    renderWithProviders(<ProductPage />);
     
-    const subtitle = screen.getByText(/crafting tools/i);
+    const subtitle = screen.getByRole("doc-subtitle");
     expect(subtitle).toBeInTheDocument();
-    expect(subtitle).toHaveAttribute("role", "doc-subtitle");
+    expect(subtitle).toHaveTextContent(/crafting tools/i);
   });
 
   test("renders service description", () => {
-    render(<ProductPage />);
+    renderWithProviders(<ProductPage />);
     
     const description = screen.getByText(/fusing world-class user experiences with cutting-edge ai technologies/i);
     expect(description).toBeInTheDocument();
   });
 
   test("renders portfolio section with proper heading", () => {
-    render(<ProductPage />);
+    renderWithProviders(<ProductPage />);
     
     const portfolioHeading = screen.getByRole("heading", { name: /featured products/i, level: 2 });
     expect(portfolioHeading).toBeInTheDocument();
   });
 
   test("renders PortfolioGallery component", () => {
-    render(<ProductPage />);
+    renderWithProviders(<ProductPage />);
     
     // The gallery should be present (we can check for the grid container or project cards)
     // Since we have Product projects in our data, they should render
@@ -42,7 +51,7 @@ describe("ProductPage", () => {
   });
 
   test("displays only Product category projects", () => {
-    render(<ProductPage />);
+    renderWithProviders(<ProductPage />);
     
     // Check that we have Product projects visible
     expect(screen.getByText(/smart voice assistant integration/i)).toBeInTheDocument();
@@ -54,7 +63,7 @@ describe("ProductPage", () => {
   });
 
   test("portfolio gallery does not show category filters", () => {
-    render(<ProductPage />);
+    renderWithProviders(<ProductPage />);
     
     // Category filter buttons should not be present since showFilters={false}
     // Check specifically for button elements with these text labels
@@ -65,7 +74,7 @@ describe("ProductPage", () => {
   });
 
   test("maintains existing page metadata and layout", () => {
-    render(<ProductPage />);
+    renderWithProviders(<ProductPage />);
     
     // Verify essential page elements are still present
     const mainHeading = screen.getByRole("heading", { name: /ai product development/i, level: 1 });
@@ -80,7 +89,7 @@ describe("ProductPage", () => {
   });
 
   test("renders with proper semantic structure", () => {
-    render(<ProductPage />);
+    renderWithProviders(<ProductPage />);
     
     // Check for semantic elements
     const article = screen.getByRole("article");
@@ -92,7 +101,7 @@ describe("ProductPage", () => {
   });
 
   test("renders site header on product page", () => {
-    render(<ProductPage />);
+    renderWithProviders(<ProductPage />);
     
     // Site header should be present on product page
     const headers = screen.getAllByRole("banner");

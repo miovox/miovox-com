@@ -1,39 +1,48 @@
 import { render, screen } from "@testing-library/react";
 import { expect, test, describe } from "vitest";
+import { ThemeProvider } from "@/components/providers/ThemeProvider";
 import EventsPage from "./page";
+
+const renderWithProviders = (ui: React.ReactElement) => {
+  return render(
+    <ThemeProvider>
+      {ui}
+    </ThemeProvider>
+  );
+};
 
 describe("EventsPage", () => {
   test("renders page title correctly", () => {
-    render(<EventsPage />);
+    renderWithProviders(<EventsPage />);
     
     const title = screen.getByRole("heading", { name: /event media production/i, level: 1 });
     expect(title).toBeInTheDocument();
   });
 
   test("renders subtitle correctly", () => {
-    render(<EventsPage />);
+    renderWithProviders(<EventsPage />);
     
-    const subtitle = screen.getByText(/crafting memories/i);
+    const subtitle = screen.getByRole("doc-subtitle");
     expect(subtitle).toBeInTheDocument();
-    expect(subtitle).toHaveAttribute("role", "doc-subtitle");
+    expect(subtitle).toHaveTextContent(/crafting memories/i);
   });
 
   test("renders service description", () => {
-    render(<EventsPage />);
+    renderWithProviders(<EventsPage />);
     
     const description = screen.getByText(/capturing moments with a keen approach to storytelling and memory preservation/i);
     expect(description).toBeInTheDocument();
   });
 
   test("renders portfolio section with proper heading", () => {
-    render(<EventsPage />);
+    renderWithProviders(<EventsPage />);
     
     const portfolioHeading = screen.getByRole("heading", { name: /featured events/i, level: 2 });
     expect(portfolioHeading).toBeInTheDocument();
   });
 
   test("renders PortfolioGallery component", () => {
-    render(<EventsPage />);
+    renderWithProviders(<EventsPage />);
     
     // The gallery should be present (we can check for the grid container or project cards)
     // Since we have Event projects in our data, they should render
@@ -42,7 +51,7 @@ describe("EventsPage", () => {
   });
 
   test("displays only Event category projects", () => {
-    render(<EventsPage />);
+    renderWithProviders(<EventsPage />);
     
     // Check that we have Event projects visible
     expect(screen.getByText(/interactive conference platform/i)).toBeInTheDocument();
@@ -54,7 +63,7 @@ describe("EventsPage", () => {
   });
 
   test("portfolio gallery does not show category filters", () => {
-    render(<EventsPage />);
+    renderWithProviders(<EventsPage />);
     
     // Category filter buttons should not be present since showFilters={false}
     // Check specifically for button elements with these text labels
@@ -65,7 +74,7 @@ describe("EventsPage", () => {
   });
 
   test("maintains existing page metadata and layout", () => {
-    render(<EventsPage />);
+    renderWithProviders(<EventsPage />);
     
     // Verify essential page elements are still present
     const mainHeading = screen.getByRole("heading", { name: /event media production/i, level: 1 });
@@ -80,7 +89,7 @@ describe("EventsPage", () => {
   });
 
   test("renders with proper semantic structure", () => {
-    render(<EventsPage />);
+    renderWithProviders(<EventsPage />);
     
     // Check for semantic elements
     const article = screen.getByRole("article");
@@ -92,7 +101,7 @@ describe("EventsPage", () => {
   });
 
   test("renders site header on events page", () => {
-    render(<EventsPage />);
+    renderWithProviders(<EventsPage />);
     
     // Site header should be present on events page
     const headers = screen.getAllByRole("banner");

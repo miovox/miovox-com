@@ -1,39 +1,48 @@
 import { render, screen } from "@testing-library/react";
 import { expect, test, describe } from "vitest";
+import { ThemeProvider } from "@/components/providers/ThemeProvider";
 import HomePage from "./page";
+
+const renderWithProviders = (ui: React.ReactElement) => {
+  return render(
+    <ThemeProvider>
+      {ui}
+    </ThemeProvider>
+  );
+};
 
 describe("HomePage", () => {
   test("renders page title correctly", () => {
-    render(<HomePage />);
+    renderWithProviders(<HomePage />);
     
     const title = screen.getByRole("heading", { name: /home tech solutions/i, level: 1 });
     expect(title).toBeInTheDocument();
   });
 
   test("renders subtitle correctly", () => {
-    render(<HomePage />);
+    renderWithProviders(<HomePage />);
     
-    const subtitle = screen.getByText(/crafting lifestyles/i);
+    const subtitle = screen.getByRole("doc-subtitle");
     expect(subtitle).toBeInTheDocument();
-    expect(subtitle).toHaveAttribute("role", "doc-subtitle");
+    expect(subtitle).toHaveTextContent(/crafting lifestyles/i);
   });
 
   test("renders service description", () => {
-    render(<HomePage />);
+    renderWithProviders(<HomePage />);
     
     const description = screen.getByText(/transforming your home with expertly designed technology systems/i);
     expect(description).toBeInTheDocument();
   });
 
   test("renders portfolio section with proper heading", () => {
-    render(<HomePage />);
+    renderWithProviders(<HomePage />);
     
     const portfolioHeading = screen.getByRole("heading", { name: /featured homes/i, level: 2 });
     expect(portfolioHeading).toBeInTheDocument();
   });
 
   test("renders PortfolioGallery component", () => {
-    render(<HomePage />);
+    renderWithProviders(<HomePage />);
     
     // The gallery should be present (we can check for the grid container or project cards)
     // Since we have Home projects in our data, they should render
@@ -42,7 +51,7 @@ describe("HomePage", () => {
   });
 
   test("displays only Home category projects", () => {
-    render(<HomePage />);
+    renderWithProviders(<HomePage />);
     
     // Check that we have Home projects visible
     expect(screen.getByText(/intelligent lighting automation/i)).toBeInTheDocument();
@@ -54,7 +63,7 @@ describe("HomePage", () => {
   });
 
   test("portfolio gallery does not show category filters", () => {
-    render(<HomePage />);
+    renderWithProviders(<HomePage />);
     
     // Category filter buttons should not be present since showFilters={false}
     // Check specifically for button elements with these text labels
@@ -65,7 +74,7 @@ describe("HomePage", () => {
   });
 
   test("maintains existing page metadata and layout", () => {
-    render(<HomePage />);
+    renderWithProviders(<HomePage />);
     
     // Verify essential page elements are still present
     const mainHeading = screen.getByRole("heading", { name: /home tech solutions/i, level: 1 });
@@ -80,7 +89,7 @@ describe("HomePage", () => {
   });
 
   test("renders with proper semantic structure", () => {
-    render(<HomePage />);
+    renderWithProviders(<HomePage />);
     
     // Check for semantic elements
     const article = screen.getByRole("article");
@@ -92,7 +101,7 @@ describe("HomePage", () => {
   });
 
   test("renders site header on home page", () => {
-    render(<HomePage />);
+    renderWithProviders(<HomePage />);
     
     // Site header should be present on home page
     const headers = screen.getAllByRole("banner");

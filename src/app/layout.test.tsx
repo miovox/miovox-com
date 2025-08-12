@@ -4,15 +4,13 @@ import RootLayout, { metadata } from "./layout";
 
 describe("RootLayout", () => {
   it("renders children correctly", () => {
-    const { container } = render(
+    const { getByTestId } = render(
       <RootLayout>
         <div data-testid="test-child">Test content</div>
       </RootLayout>
     );
 
-    expect(
-      container.querySelector('[data-testid="test-child"]')
-    ).toBeInTheDocument();
+    expect(getByTestId("test-child")).toBeInTheDocument();
   });
 
   // it('applies Inter font class to body', () => {
