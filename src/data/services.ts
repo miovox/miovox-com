@@ -67,7 +67,7 @@ export const services: ServiceConfig[] = [
     label: 'About',
     tagline: 'Philip Jones',
     brandStatement: 'About Philip',
-    href: '/', // Temporarily link to home until /about route exists
+    href: '/about',
     icon: 'about',
     bgColor: 'miovox-blue-300',
     hoverColor: 'miovox-blue-400',

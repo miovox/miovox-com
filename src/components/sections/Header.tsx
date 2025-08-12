@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import Container from "../ui/Container";
 import { ThemeToggle } from "../ui/ThemeToggle";
+import { ServiceNavigation } from "../features/ServiceNavigation";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 
@@ -26,16 +27,19 @@ export default function Header(): JSX.Element {
     <header className="bg-background border-b border-border sticky top-0 z-50">
       <Container>
         <div className="flex items-center justify-between py-4">
-          <Link href="/" className="flex items-center">
-            <Image
-              src={logoSrc}
-              alt="Miovox"
-              width={200}
-              height={50}
-              className="h-8 w-auto transition-opacity duration-300"
-              priority
-            />
-          </Link>
+          <div className="flex items-center gap-1">
+            <Link href="/" className="flex items-center">
+              <Image
+                src={logoSrc}
+                alt="Miovox"
+                width={200}
+                height={50}
+                className="h-8 w-auto transition-opacity duration-300"
+                priority
+              />
+            </Link>
+            <ServiceNavigation variant="header" />
+          </div>
           <ThemeToggle />
         </div>
       </Container>
